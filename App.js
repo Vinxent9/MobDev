@@ -2,23 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
+import {createDrawerNavigator} from '@react-navigation/drawer'
+import {Header} from 'react-native-elements'
 import Comp1 from './component/Comp1'
+import HomeScreen from './component/HomeScreen'
 
 
-//Homescreen navigator function
-const HomeScreen = ({navigation}) => {
-
-  return( 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  )
-
-}
 
 //detailscreen navigator function
 const DetailScreen = ({navigation}) => {
@@ -40,17 +29,66 @@ const DetailScreen = ({navigation}) => {
 
 }
 
-const Stack = createStackNavigator()
 
+
+const SettingScreen = ({navigation}) => {
+  return(
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Notification')}
+        title="Go to notifications"
+      />
+    </View>
+  )
+}
+
+const NotificationScreen = ({navigation}) => {
+  return(
+   <Stack.Navigator initialRouteName = "Home"> 
+     <Stack.Screen name = "Home" component = {HomeScreen} />
+     <Stack.Screen name = "Details" component = {DetailScreen} />
+   </Stack.Navigator>
+  )
+}
+
+const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   
   return( 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "Home">
-        <Stack.Screen name = "Home" component = {HomeScreen} />
+      {/* <Stack.Navigator 
+        initialRouteName = "Home"
+        screenOptions ={{
+          headerStyle:{
+            backgroundColor : '#f4511e'
+          },
+          headerTintColor : '#fff'
+        }}
+      >
+        <Stack.Screen 
+          name = "Home" 
+          component = {HomeScreen} 
+          options={{
+            headerRight : () => (
+              <Button 
+                onPress={() => alert('This is a button!')}
+                title="Next"
+                color="#444444"
+              />
+            )
+          }}
+        />
         <Stack.Screen name = "Details" component = {DetailScreen} />
-      </Stack.Navigator>
+        </Stack.Navigator> */}
+        <Drawer.Navigator initialRouteName = "Home">
+          <Drawer.Screen name = "Home" component = {HomeScreen} />
+          <Drawer.Screen name = "Setting" component = {SettingScreen} />
+          <Drawer.Screen name = "Notification" component = {NotificationScreen} />
+          <Drawer.Screen name = "Comp1" component = {Comp1} />
+        </Drawer.Navigator>
+      
     </NavigationContainer>
   )
 }

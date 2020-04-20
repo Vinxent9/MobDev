@@ -1,11 +1,15 @@
 import React from 'react'
-import {StyleSheet,Text,ScrollView,View} from 'react-native'
+import {StyleSheet,Text,ScrollView,View,Button} from 'react-native'
 
-const Comp1 = () => {
+const Comp1 = ({navigation}) => {
 
     return (
         <View>
             <Text>This is Comp1</Text>
+            <Button
+                title="Go to Home"
+                onPress={() => navigation.navigate('Home')}
+            />
         </View>
     )
 
